@@ -2,15 +2,20 @@ name: Build APK
 on: [push, workflow_dispatch]
 jobs:
   build:
-    runs-on: ubuntu-22.04
-    timeout-minutes: 15
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - name: Build with Gradle
+    - uses: actions/setup-java@v5
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+    - name: Install Gradle
       run: |
-        gradle wrapper --gradle-version 6.7.1
-        ./gradlew assembleDebug --no-daemon
-    - name: Upload APK
+        wget https://services.gradle.org/distributions/gradle-7.6-bin.zip
+        unzip gradle-7.6-bin.zip
+    - name: Build
+      run: ./gradle-7.6/bin/gradle assembleDebug
+    - name: Upload
       uses: actions/upload-artifact@v4
       with:
         name: app-debug
