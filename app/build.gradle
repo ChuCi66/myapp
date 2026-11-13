@@ -1,0 +1,6 @@
+apply plugin: "com.android.application"
+android {
+    namespace "com.example.syscalc"
+    compileSdk 33
+    defaultConfig { applicationId "com.example.syscalc"; minSdk 24; targetSdk 33 }
+}
