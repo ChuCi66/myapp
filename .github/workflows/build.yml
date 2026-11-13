@@ -3,7 +3,7 @@ on: [push, workflow_dispatch]
 jobs:
   build:
     runs-on: ubuntu-22.04
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 17
@@ -11,10 +11,8 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-    - name: Build with Gradle (Aliyun Mirror)
+    - name: Build with Gradle
       run: |
-        sed -i 's|https://repo.maven.apache.org/maven2|https://maven.aliyun.com/repository/public|g' build.gradle
-        sed -i 's|https://dl.google.com/dl/android/maven2|https://maven.aliyun.com/repository/google|g' build.gradle
         gradle wrapper --gradle-version 7.6
         ./gradlew assembleDebug --no-daemon
     - name: Upload APK
